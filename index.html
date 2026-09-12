@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pupo Corretora de Seguros — Tranquilidade e proteção para sua família</title>
+  <meta name="description" content="Especialistas há mais de 8 anos em seguros de automóvel, vida, residencial e empresarial. Atendimento humano e as melhores seguradoras do mercado. Faça sua cotação sem compromisso." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Pupo Corretora de Seguros" />
+  <meta property="og:description" content="Tranquilidade e proteção para você e sua família. Especialistas há mais de 8 anos." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { DEFAULT: '#0d2440', 700: '#122e50', 800: '#0d2440', 900: '#081a30' },
+            sky: { DEFAULT: '#3b9fe0', 400: '#5cb3ea', 500: '#3b9fe0', 600: '#2b86c6' },
+          },
+          fontFamily: {
+            display: ['Poppins', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Poppins', sans-serif; }
+    .hero-gradient { background: radial-gradient(1200px 600px at 80% -10%, #1a3a63 0%, #0d2440 45%, #081a30 100%); }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: all .7s cubic-bezier(.2,.7,.2,1); }
+    .fade-up.in { opacity: 1; transform: none; }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); backdrop-filter: blur(8px); }
+  </style>
+</head>
+<body class="bg-navy text-slate-100 antialiased">
+
+  <!-- ===== Logo (SVG reutilizável) ===== -->
+  <template id="logo-mark">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="32" cy="32" r="32" fill="#0d2440"/>
+      <path d="M23 46V19h12.5c5.8 0 9.5 3.4 9.5 8.6 0 5.2-3.7 8.7-9.5 8.7H29.5" stroke="#3b9fe0" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </template>
+
+  <!-- ===== Header ===== -->
+  <header class="fixed top-0 inset-x-0 z-50 transition-all" id="site-header">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="#topo" class="flex items-center gap-2.5">
+          <span class="w-9 h-9 md:w-10 md:h-10 logo-slot"></span>
+          <span class="font-display font-extrabold tracking-tight text-lg md:text-xl">PUPO <span class="text-sky-500 font-semibold">Corretora</span></span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <a href="#seguros" class="hover:text-white transition-colors">Seguros</a>
+          <a href="#diferenciais" class="hover:text-white transition-colors">Diferenciais</a>
+          <a href="#sobre" class="hover:text-white transition-colors">Sobre</a>
+          <a href="#depoimentos" class="hover:text-white transition-colors">Depoimentos</a>
+          <a href="#contato" class="hover:text-white transition-colors">Contato</a>
+        </nav>
+
+        <a href="#cotacao" class="hidden md:inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+          Fazer cotação
+        </a>
+
+        <button id="menu-btn" class="md:hidden p-2 text-white" aria-label="Menu">
+          <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="md:hidden hidden bg-navy-900 border-t border-white/10">
+      <nav class="max-w-6xl mx-auto px-5 py-4 flex flex-col gap-1 text-slate-200">
+        <a href="#seguros" class="py-2.5 border-b border-white/5">Seguros</a>
+        <a href="#diferenciais" class="py-2.5 border-b border-white/5">Diferenciais</a>
+        <a href="#sobre" class="py-2.5 border-b border-white/5">Sobre</a>
+        <a href="#depoimentos" class="py-2.5 border-b border-white/5">Depoimentos</a>
+        <a href="#contato" class="py-2.5">Contato</a>
+        <a href="#cotacao" class="mt-3 text-center bg-sky-500 text-white font-semibold px-5 py-3 rounded-full">Fazer cotação</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section id="topo" class="hero-gradient relative overflow-hidden pt-28 md:pt-36 pb-20 md:pb-28">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
+    <div class="max-w-6xl mx-auto px-5 relative">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="inline-flex items-center gap-2 glass text-sky-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+            +8 anos protegendo famílias
+          </span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.08] tracking-tight">
+            Tranquilidade e <span class="text-sky-500">proteção</span> para você e sua família
+          </h1>
+          <p class="mt-6 text-lg text-slate-300 max-w-lg">
+            Somos especialistas em seguros de automóvel, vida, residencial e empresarial.
+            Atendimento próximo, humano e com as melhores seguradoras do mercado.
+          </p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <a href="#cotacao" class="inline-flex justify-center items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white font-semibold px-7 py-3.5 rounded-full transition-colors">
+              Fazer cotação grátis
+            </a>
+            <a id="wa-hero" href="#" target="_blank" rel="noopener" class="inline-flex justify-center items-center gap-2 glass hover:bg-white/10 text-white font-semibold px-7 py-3.5 rounded-full transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.86 9.86 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.09c-.25.7-1.44 1.33-1.99 1.36-.53.06-1.03.28-3.48-.72-2.94-1.16-4.83-4.14-4.98-4.33-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.36 1.45.3.15.47.12.64-.07.17-.2.73-.85.92-1.14.2-.3.4-.25.67-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.07.12.07.72-.18 1.42z"/></svg>
+              Chamar no WhatsApp
+            </a>
+          </div>
+
+          <div class="mt-10 flex items-center gap-6 text-sm text-slate-400">
+            <div class="flex items-center gap-2">
+              <div class="flex -space-x-2">
+                <span class="w-8 h-8 rounded-full bg-sky-500/80 border-2 border-navy"></span>
+                <span class="w-8 h-8 rounded-full bg-sky-400/80 border-2 border-navy"></span>
+                <span class="w-8 h-8 rounded-full bg-slate-300/80 border-2 border-navy"></span>
+              </div>
+              <span>Centenas de clientes protegidos</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card visual -->
+        <div class="relative">
+          <div class="glass rounded-3xl p-8 md:p-10 relative">
+            <div class="w-20 h-20 mx-auto logo-slot"></div>
+            <p class="text-center font-display font-bold text-2xl mt-4">PUPO Corretora</p>
+            <p class="text-center text-sky-300 text-xs tracking-[0.3em] uppercase mt-1">Seguros · Confiança · Tranquilidade</p>
+
+            <div class="grid grid-cols-3 gap-3 mt-8 text-center">
+              <div class="bg-white/5 rounded-2xl py-4">
+                <p class="text-2xl font-extrabold text-white">8+</p>
+                <p class="text-[11px] text-slate-400 mt-1">anos de<br>experiência</p>
+              </div>
+              <div class="bg-white/5 rounded-2xl py-4">
+                <p class="text-2xl font-extrabold text-white">100%</p>
+                <p class="text-[11px] text-slate-400 mt-1">atendimento<br>humano</p>
+              </div>
+              <div class="bg-white/5 rounded-2xl py-4">
+                <p class="text-2xl font-extrabold text-white">+10</p>
+                <p class="text-[11px] text-slate-400 mt-1">seguradoras<br>parceiras</p>
+              </div>
+            </div>
+
+            <div class="mt-8 flex items-center justify-center gap-2 text-slate-300 text-sm">
+              <span class="text-slate-400">Parceira oficial</span>
+              <span class="font-display font-bold text-white">Porto</span>
+              <span class="text-slate-500">·</span>
+              <span class="text-slate-300">Azul</span>
+              <span class="text-slate-500">·</span>
+              <span class="text-slate-300">Bradesco</span>
+            </div>
+          </div>
+          <div class="absolute -bottom-5 -left-5 glass rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl">
+            <span class="w-9 h-9 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center">✓</span>
+            <div class="text-xs">
+              <p class="font-semibold text-white">Sinistro resolvido</p>
+              <p class="text-slate-400">acompanhamento total</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Faixa de confiança ===== -->
+  <div class="bg-navy-900 border-y border-white/5">
+    <div class="max-w-6xl mx-auto px-5 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      <div><p class="font-display font-bold text-xl text-white">Rapidez</p><p class="text-xs text-slate-400 mt-1">cotação no mesmo dia</p></div>
+      <div><p class="font-display font-bold text-xl text-white">Economia</p><p class="text-xs text-slate-400 mt-1">comparamos por você</p></div>
+      <div><p class="font-display font-bold text-xl text-white">Confiança</p><p class="text-xs text-slate-400 mt-1">relação de anos</p></div>
+      <div><p class="font-display font-bold text-xl text-white">Suporte</p><p class="text-xs text-slate-400 mt-1">na hora que precisa</p></div>
+    </div>
+  </div>
+
+  <!-- ===== Seguros ===== -->
+  <section id="seguros" class="py-20 md:py-28 bg-white text-navy">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="text-center max-w-2xl mx-auto fade-up">
+        <p class="text-sky-600 font-semibold text-sm uppercase tracking-wider">Nossas soluções</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-2">Um seguro para cada momento da sua vida</h2>
+        <p class="text-slate-500 mt-4">Do seu carro à sua empresa, cuidamos do que é importante para você com as melhores condições do mercado.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
+        <!-- cards -->
+        <div class="fade-up group bg-slate-50 hover:bg-navy hover:text-white rounded-2xl p-7 transition-all duration-300 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 group-hover:bg-white/10 text-2xl flex items-center justify-center">🚗</div>
+          <h3 class="font-display font-bold text-xl mt-5">Seguro Auto</h3>
+          <p class="text-sm text-slate-500 group-hover:text-slate-300 mt-2">Proteção completa contra roubo, colisão e terceiros, com assistência 24h e carro reserva.</p>
+        </div>
+        <div class="fade-up group bg-slate-50 hover:bg-navy hover:text-white rounded-2xl p-7 transition-all duration-300 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 group-hover:bg-white/10 text-2xl flex items-center justify-center">❤️</div>
+          <h3 class="font-display font-bold text-xl mt-5">Seguro de Vida</h3>
+          <p class="text-sm text-slate-500 group-hover:text-slate-300 mt-2">Tranquilidade para quem você ama, com coberturas que se adaptam ao seu momento de vida.</p>
+        </div>
+        <div class="fade-up group bg-slate-50 hover:bg-navy hover:text-white rounded-2xl p-7 transition-all duration-300 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 group-hover:bg-white/10 text-2xl flex items-center justify-center">🏠</div>
+          <h3 class="font-display font-bold text-xl mt-5">Seguro Residencial</h3>
+          <p class="text-sm text-slate-500 group-hover:text-slate-300 mt-2">Seu lar protegido contra incêndio, roubo, danos elétricos e muito mais, por pouco ao mês.</p>
+        </div>
+        <div class="fade-up group bg-slate-50 hover:bg-navy hover:text-white rounded-2xl p-7 transition-all duration-300 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 group-hover:bg-white/10 text-2xl flex items-center justify-center">🏢</div>
+          <h3 class="font-display font-bold text-xl mt-5">Seguro Empresarial</h3>
+          <p class="text-sm text-slate-500 group-hover:text-slate-300 mt-2">Proteja seu patrimônio e seu negócio com coberturas sob medida para a sua empresa.</p>
+        </div>
+        <div class="fade-up group bg-slate-50 hover:bg-navy hover:text-white rounded-2xl p-7 transition-all duration-300 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 group-hover:bg-white/10 text-2xl flex items-center justify-center">🏍️</div>
+          <h3 class="font-display font-bold text-xl mt-5">Seguro Moto</h3>
+          <p class="text-sm text-slate-500 group-hover:text-slate-300 mt-2">Sua moto segura contra roubo, furto e acidentes, com assistência para onde você for.</p>
+        </div>
+        <div class="fade-up group bg-slate-50 hover:bg-navy hover:text-white rounded-2xl p-7 transition-all duration-300 border border-slate-100">
+          <div class="w-12 h-12 rounded-xl bg-sky-100 group-hover:bg-white/10 text-2xl flex items-center justify-center">📱</div>
+          <h3 class="font-display font-bold text-xl mt-5">Consórcio & mais</h3>
+          <p class="text-sm text-slate-500 group-hover:text-slate-300 mt-2">Consórcios, seguro celular, viagem e outras soluções para realizar seus planos com segurança.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Diferenciais ===== -->
+  <section id="diferenciais" class="py-20 md:py-28 bg-navy-900">
+    <div class="max-w-6xl mx-auto px-5 grid md:grid-cols-2 gap-14 items-center">
+      <div class="fade-up">
+        <p class="text-sky-400 font-semibold text-sm uppercase tracking-wider">Por que a Pupo?</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-2 leading-tight">Uma corretora, não um site de cotação</h2>
+        <p class="text-slate-400 mt-4">Aqui você fala com gente de verdade. Cuidamos de todo o processo — da escolha da apólice ao acompanhamento do sinistro — para que você tenha só a tranquilidade.</p>
+
+        <div class="mt-8 space-y-5">
+          <div class="flex gap-4">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">👩‍💼</span>
+            <div><h3 class="font-semibold text-white">Atendimento consultivo</h3><p class="text-sm text-slate-400 mt-1">Entendemos sua necessidade antes de indicar qualquer seguro.</p></div>
+          </div>
+          <div class="flex gap-4">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">🔍</span>
+            <div><h3 class="font-semibold text-white">Comparação imparcial</h3><p class="text-sm text-slate-400 mt-1">Buscamos o melhor custo-benefício entre várias seguradoras.</p></div>
+          </div>
+          <div class="flex gap-4">
+            <span class="shrink-0 w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">🤝</span>
+            <div><h3 class="font-semibold text-white">Ao seu lado no sinistro</h3><p class="text-sm text-slate-400 mt-1">Na hora que mais importa, você não fica sozinho.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up glass rounded-3xl p-8 md:p-10">
+        <blockquote class="text-xl md:text-2xl font-display font-medium leading-relaxed text-white">
+          “A gente não vende apólice. A gente entrega <span class="text-sky-400">tranquilidade</span> para as famílias que confiam na Pupo.”
+        </blockquote>
+        <div class="mt-6 flex items-center gap-3">
+          <span class="w-11 h-11 rounded-full logo-slot"></span>
+          <div>
+            <p class="font-semibold text-white">Equipe Pupo Corretora</p>
+            <p class="text-sm text-slate-400">Especialistas em seguros</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Sobre ===== -->
+  <section id="sobre" class="py-20 md:py-28 bg-white text-navy">
+    <div class="max-w-5xl mx-auto px-5 text-center fade-up">
+      <p class="text-sky-600 font-semibold text-sm uppercase tracking-wider">Sobre nós</p>
+      <h2 class="text-3xl md:text-4xl font-extrabold mt-2">Mais de 8 anos cuidando do que importa</h2>
+      <p class="text-slate-500 mt-6 text-lg max-w-3xl mx-auto">
+        A Pupo Corretora nasceu para descomplicar o mundo dos seguros. Com atendimento próximo e humano,
+        ajudamos você a proteger seu carro, sua casa, sua vida e o seu negócio — sempre com as melhores
+        condições e a segurança de quem entende do assunto.
+      </p>
+      <div class="mt-12 grid sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+        <div class="rounded-2xl border border-slate-100 p-6"><p class="text-4xl font-extrabold text-sky-600">8+</p><p class="text-slate-500 mt-2 text-sm">anos de mercado</p></div>
+        <div class="rounded-2xl border border-slate-100 p-6"><p class="text-4xl font-extrabold text-sky-600">+500</p><p class="text-slate-500 mt-2 text-sm">clientes atendidos</p></div>
+        <div class="rounded-2xl border border-slate-100 p-6"><p class="text-4xl font-extrabold text-sky-600">10+</p><p class="text-slate-500 mt-2 text-sm">seguradoras parceiras</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Depoimentos ===== -->
+  <section id="depoimentos" class="py-20 md:py-28 bg-slate-50 text-navy">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="text-center max-w-2xl mx-auto fade-up">
+        <p class="text-sky-600 font-semibold text-sm uppercase tracking-wider">Depoimentos</p>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-2">Quem confia, recomenda</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mt-14">
+        <figure class="fade-up bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="text-sky-500">★★★★★</div>
+          <blockquote class="text-slate-600 mt-4">“Atendimento impecável. Resolveram meu seguro do carro rapidinho e ainda economizei. Super recomendo!”</blockquote>
+          <figcaption class="mt-5 font-semibold">Mariana S.</figcaption>
+        </figure>
+        <figure class="fade-up bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="text-sky-500">★★★★★</div>
+          <blockquote class="text-slate-600 mt-4">“Na hora do sinistro fiquei muito bem amparado. A Pupo cuidou de tudo pra mim. Confiança total.”</blockquote>
+          <figcaption class="mt-5 font-semibold">Carlos E.</figcaption>
+        </figure>
+        <figure class="fade-up bg-white rounded-2xl p-7 border border-slate-100 shadow-sm">
+          <div class="text-sky-500">★★★★★</div>
+          <blockquote class="text-slate-600 mt-4">“Fiz o seguro de vida da minha família com elas. Explicaram tudo com calma e carinho. Nota 10!”</blockquote>
+          <figcaption class="mt-5 font-semibold">Juliana R.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Cotação / Contato ===== -->
+  <section id="cotacao" class="py-20 md:py-28 hero-gradient relative overflow-hidden">
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
+    <div id="contato" class="max-w-5xl mx-auto px-5 relative grid md:grid-cols-2 gap-12 items-center">
+      <div class="fade-up">
+        <h2 class="text-3xl md:text-4xl font-extrabold leading-tight">Faça sua cotação <span class="text-sky-500">sem compromisso</span></h2>
+        <p class="text-slate-300 mt-4">Preencha os dados e receba uma proposta pelo WhatsApp. Rápido, gratuito e sem enrolação.</p>
+
+        <ul class="mt-8 space-y-3 text-slate-300 text-sm">
+          <li class="flex items-center gap-3"><span class="text-sky-400">✓</span> Resposta no mesmo dia</li>
+          <li class="flex items-center gap-3"><span class="text-sky-400">✓</span> Comparação entre seguradoras</li>
+          <li class="flex items-center gap-3"><span class="text-sky-400">✓</span> Atendimento humano de verdade</li>
+        </ul>
+
+        <div class="mt-8 flex items-center gap-4 text-sm">
+          <a id="wa-side" href="#" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-white font-semibold">
+            <span class="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.86 9.86 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>
+            </span>
+            WhatsApp direto
+          </a>
+          <a href="https://linktr.ee/pupocorretora" target="_blank" rel="noopener" class="text-slate-300 hover:text-white underline underline-offset-4">Todos os links</a>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form id="cotacao-form" class="fade-up glass rounded-3xl p-6 md:p-8 space-y-4">
+        <!-- Honeypot anti-spam: invisível para humanos, preenchido por bots -->
+        <input name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+        <div>
+          <label class="text-sm text-slate-300">Seu nome</label>
+          <input name="nome" required type="text" placeholder="Como podemos te chamar?" class="mt-1 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30 transition" />
+        </div>
+        <div>
+          <label class="text-sm text-slate-300">WhatsApp</label>
+          <input name="telefone" required type="tel" placeholder="(11) 90000-0000" class="mt-1 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30 transition" />
+        </div>
+        <div>
+          <label class="text-sm text-slate-300">Qual seguro você procura?</label>
+          <select name="seguro" class="mt-1 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/30 transition">
+            <option class="text-navy" value="Seguro Auto" data-code="AUTO">Seguro Auto</option>
+            <option class="text-navy" value="Seguro de Vida" data-code="VIDA">Seguro de Vida</option>
+            <option class="text-navy" value="Seguro Residencial" data-code="RESIDENCIAL">Seguro Residencial</option>
+            <option class="text-navy" value="Seguro Empresarial" data-code="EMPRESARIAL">Seguro Empresarial</option>
+            <option class="text-navy" value="Seguro Moto" data-code="MOTO">Seguro Moto</option>
+            <option class="text-navy" value="Consórcio / Outros" data-code="CONSORCIO_SERVICOS">Consórcio / Outros</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2">
+          Enviar pelo WhatsApp
+        </button>
+        <p class="text-[11px] text-slate-400 text-center">Ao enviar, você será direcionado ao nosso WhatsApp com a mensagem pronta.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="bg-navy-900 border-t border-white/5 pt-14 pb-8">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="grid md:grid-cols-3 gap-10">
+        <div>
+          <a href="#topo" class="flex items-center gap-2.5">
+            <span class="w-10 h-10 logo-slot"></span>
+            <span class="font-display font-extrabold text-lg">PUPO <span class="text-sky-500 font-semibold">Corretora</span></span>
+          </a>
+          <p class="text-slate-400 text-sm mt-4 max-w-xs">Tranquilidade e proteção para você e sua família. Especialistas em seguros há mais de 8 anos.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white">Navegação</h4>
+          <ul class="mt-4 space-y-2 text-sm text-slate-400">
+            <li><a href="#seguros" class="hover:text-white">Seguros</a></li>
+            <li><a href="#diferenciais" class="hover:text-white">Diferenciais</a></li>
+            <li><a href="#sobre" class="hover:text-white">Sobre</a></li>
+            <li><a href="#cotacao" class="hover:text-white">Fazer cotação</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white">Fale com a gente</h4>
+          <ul class="mt-4 space-y-3 text-sm text-slate-400">
+            <li><a id="wa-footer" href="#" target="_blank" rel="noopener" class="hover:text-white inline-flex items-center gap-2">📱 WhatsApp</a></li>
+            <li><a href="https://instagram.com/pupo.corretora" target="_blank" rel="noopener" class="hover:text-white inline-flex items-center gap-2">📸 @pupo.corretora</a></li>
+            <li><a href="https://linktr.ee/pupocorretora" target="_blank" rel="noopener" class="hover:text-white inline-flex items-center gap-2">🔗 linktr.ee/pupocorretora</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500">
+        <p>© <span id="ano"></span> Pupo Corretora de Seguros. Todos os direitos reservados.</p>
+        <p>Feito com 💙 para proteger o que importa.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== WhatsApp flutuante ===== -->
+  <a id="wa-float" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 shadow-lg flex items-center justify-center transition-transform hover:scale-105">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.86 9.86 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.09c-.25.7-1.44 1.33-1.99 1.36-.53.06-1.03.28-3.48-.72-2.94-1.16-4.83-4.14-4.98-4.33-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.36 1.45.3.15.47.12.64-.07.17-.2.73-.85.92-1.14.2-.3.4-.25.67-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.07.12.07.72-.18 1.42z"/></svg>
+  </a>
+
+  <script>
+    // ==== CONFIGURE AQUI: número de WhatsApp da corretora (formato internacional, só dígitos) ====
+    const WHATSAPP = '5511999999999'; // TODO: trocar pelo número real da Pupo Corretora
+
+    // ==== CONFIGURE AQUI: endereço do Synapse CRM (onde o lead será criado) ====
+    // Ex.: 'https://crm.pupocorretora.com.br'. Deixe vazio para desativar a integração.
+    const CRM_URL = ''; // TODO: apontar para o Synapse CRM em produção
+    const CRM_LEADS_ENDPOINT = CRM_URL ? CRM_URL.replace(/\/$/, '') + '/api/public/leads' : '';
+
+    // Injeta o logo SVG em todos os slots
+    const logoSvg = document.getElementById('logo-mark').innerHTML;
+    document.querySelectorAll('.logo-slot').forEach((el) => { el.innerHTML = logoSvg; });
+
+    // Ano do rodapé
+    document.getElementById('ano').textContent = new Date().getFullYear();
+
+    // Links de WhatsApp
+    const waBase = 'https://wa.me/' + WHATSAPP + '?text=';
+    const msgPadrao = encodeURIComponent('Olá! Vim pelo site e gostaria de fazer uma cotação de seguro. 🙂');
+    ['wa-hero', 'wa-side', 'wa-footer', 'wa-float'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.href = waBase + msgPadrao;
+    });
+
+    // Formulário -> cria lead no CRM (se configurado) e abre o WhatsApp
+    document.getElementById('cotacao-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const f = e.target;
+      const seguroOption = f.seguro.options[f.seguro.selectedIndex];
+      const seguroLabel = seguroOption.value;
+      const seguroCode = seguroOption.getAttribute('data-code') || 'AUTO';
+
+      // 1) Envia o lead ao Synapse CRM (best-effort, não bloqueia o WhatsApp)
+      if (CRM_LEADS_ENDPOINT && !f.website.value) {
+        fetch(CRM_LEADS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: f.nome.value,
+            phone: f.telefone.value,
+            interest: seguroCode,
+            interestLabel: seguroLabel,
+            website: f.website.value, // honeypot
+          }),
+        }).catch(() => {});
+      }
+
+      // 2) Direciona o cliente ao WhatsApp com a mensagem pronta
+      const msg =
+        'Olá! Gostaria de uma cotação. 🙂%0A%0A' +
+        '*Nome:* ' + encodeURIComponent(f.nome.value) + '%0A' +
+        '*WhatsApp:* ' + encodeURIComponent(f.telefone.value) + '%0A' +
+        '*Seguro:* ' + encodeURIComponent(seguroLabel);
+      window.open(waBase + msg, '_blank');
+    });
+
+    // Header com fundo ao rolar
+    const header = document.getElementById('site-header');
+    const onScroll = () => header.classList.toggle('bg-navy-900/95', window.scrollY > 20) && header.classList.toggle('backdrop-blur', window.scrollY > 20);
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) { header.classList.add('bg-navy-900/95', 'backdrop-blur', 'shadow-lg'); }
+      else { header.classList.remove('bg-navy-900/95', 'backdrop-blur', 'shadow-lg'); }
+    });
+
+    // Menu mobile
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    // Animação fade-up ao entrar na viewport
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
