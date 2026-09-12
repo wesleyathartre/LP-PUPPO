@@ -416,7 +416,7 @@
 
     // ==== CONFIGURE AQUI: endereço do Synapse CRM (onde o lead será criado) ====
     // Ex.: 'https://crm.pupocorretora.com.br'. Deixe vazio para desativar a integração.
-    const CRM_URL = ''; // TODO: apontar para o Synapse CRM em produção
+    const CRM_URL = 'https://synapse-eta-nine.vercel.app';
     const CRM_LEADS_ENDPOINT = CRM_URL ? CRM_URL.replace(/\/$/, '') + '/api/public/leads' : '';
 
     // Injeta o logo SVG em todos os slots
