@@ -342,6 +342,7 @@
             <option class="text-navy" value="Consórcio / Outros" data-code="CONSORCIO_SERVICOS">Consórcio / Outros</option>
           </select>
         </div>
+        <div id="form-feedback" class="hidden text-xs rounded-xl p-3 text-center"></div>
         <button type="submit" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2">
           Quero conhecer o Synapse
         </button>
@@ -395,10 +396,12 @@
     // ==== CONFIGURE AQUI: número de WhatsApp da corretora (formato internacional, só dígitos) ====
     const WHATSAPP = '5511999999999'; // TODO: trocar pelo número real de contato do Synapse
 
-    // ==== CONFIGURE AQUI: endereço do Synapse CRM (onde o lead será criado) ====
-    // Ex.: 'https://crm.synapse.app'. Deixe vazio para desativar a integração.
-    const CRM_URL = 'https://synapse-eta-nine.vercel.app';
-    const CRM_LEADS_ENDPOINT = CRM_URL ? CRM_URL.replace(/\/$/, '') + '/api/public/leads' : '';
+        // ==== ENDEREÇOS DO SYNAPSE CRM ====
+    const PROD_CRM = 'https://synapse-eta-nine.vercel.app';
+    const LOCAL_CRM = 'http://localhost:3000';
+    // Se a página estiver rodando em localhost ou se for arquivo local, você pode apontar para LOCAL_CRM
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const CRM_URL = isLocal ? LOCAL_CRM : PROD_CRM;
 
     // Injeta o logo SVG em todos os slots
     const logoSvg = document.getElementById('logo-mark').innerHTML;
@@ -415,36 +418,86 @@
       if (el) el.href = waBase + msgPadrao;
     });
 
-    // Formulário -> cria lead no CRM (se configurado) e abre o WhatsApp
-    document.getElementById('cotacao-form').addEventListener('submit', function (e) {
+    // Formulário -> cria lead no CRM Synapse e abre o WhatsApp com feedback em tempo real
+    document.getElementById('cotacao-form').addEventListener('submit', async function (e) {
       e.preventDefault();
       const f = e.target;
+      const submitBtn = f.querySelector('button[type="submit"]');
+      const feedback = document.getElementById('form-feedback');
       const seguroOption = f.seguro.options[f.seguro.selectedIndex];
       const seguroLabel = seguroOption.value;
       const seguroCode = seguroOption.getAttribute('data-code') || 'AUTO';
 
-      // 1) Envia o lead ao Synapse CRM (best-effort, não bloqueia o WhatsApp)
-      if (CRM_LEADS_ENDPOINT && !f.website.value) {
-        fetch(CRM_LEADS_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: f.nome.value,
-            phone: f.telefone.value,
-            interest: seguroCode,
-            interestLabel: seguroLabel,
-            website: f.website.value, // honeypot
-          }),
-        }).catch(() => {});
+      // Estado de carregamento no botão
+      submitBtn.disabled = true;
+      const originalBtnText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="inline-block animate-pulse">⏳ Registrando no CRM Synapse...</span>';
+      feedback.className = 'hidden';
+
+      let leadCreated = false;
+      let errorMsg = '';
+
+      // Tenta enviar para o CRM (prioriza a URL ativa e tenta fallback local/remoto)
+      const endpointsToTry = [
+        CRM_URL + '/api/public/leads',
+        (CRM_URL === LOCAL_CRM ? PROD_CRM : LOCAL_CRM) + '/api/public/leads'
+      ];
+
+      for (const endpoint of endpointsToTry) {
+        if (f.website.value) break; // Honeypot anti-bot
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: f.nome.value,
+              phone: f.telefone.value,
+              email: f.email && f.email.value ? f.email.value : null,
+              interest: seguroCode,
+              interestLabel: seguroLabel,
+              website: f.website.value,
+            }),
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (res.ok) {
+            leadCreated = true;
+            break;
+          } else {
+            errorMsg = data.error || ('Erro ' + res.status);
+          }
+        } catch (err) {
+          errorMsg = 'Servidor do CRM inacessível';
+        }
       }
 
-      // 2) Direciona o cliente ao WhatsApp com a mensagem pronta
+      // Feedback visual na tela
+      if (leadCreated) {
+        feedback.className = 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs rounded-xl p-3 text-center';
+        feedback.innerHTML = '✅ <strong>Lead cadastrado com sucesso no Synapse CRM!</strong><br><span class="text-slate-300">Abrindo seu WhatsApp em instantes...</span>';
+      } else {
+        feedback.className = 'bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs rounded-xl p-3 text-center';
+        feedback.innerHTML = '⚠️ <strong>Aviso:</strong> ' + errorMsg + '.<br><span class="text-slate-300">Redirecionando direto para o WhatsApp...</span>';
+      }
+
+      // Prepara mensagem do WhatsApp
       const msg =
         'Olá! Tenho interesse no Synapse CRM. 🙂%0A%0A' +
         '*Nome:* ' + encodeURIComponent(f.nome.value) + '%0A' +
         '*WhatsApp:* ' + encodeURIComponent(f.telefone.value) + '%0A' +
+        (f.email && f.email.value ? ('*E-mail:* ' + encodeURIComponent(f.email.value) + '%0A') : '') +
         '*Segmento:* ' + encodeURIComponent(seguroLabel);
-      window.open(waBase + msg, '_blank');
+
+      // Redireciona com pequeno atraso para o usuário ver o feedback
+      setTimeout(() => {
+        window.open(waBase + msg, '_blank');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
+        if (leadCreated) {
+          f.reset();
+        }
+      }, leadCreated ? 1200 : 2500);
     });
 
     // Header com fundo ao rolar
