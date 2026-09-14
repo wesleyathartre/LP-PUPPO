@@ -620,8 +620,7 @@
             if (data.sessionId) sessionId = data.sessionId;
             bubble('bot', data.reply);
             if (data.done) {
-              const tag = data.classification ? ' (lead ' + String(data.classification).toLowerCase() + ')' : '';
-              bubble('bot', '✅ Prontinho! Seus dados foram registrados no CRM' + tag + '. Nossa equipe já vai te chamar. 🙌');
+              bubble('bot', '✅ Prontinho! Seus dados foram registrados. Um de nossos corretores entrará em contato em breve. 🙌');
               input.disabled = true;
               form.querySelector('button[type="submit"]').disabled = true;
             }
