@@ -63,6 +63,7 @@
 
         <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
           <a href="#seguros" class="hover:text-white transition-colors">Seguros</a>
+          <a href="#simulador" class="hover:text-white transition-colors">Simular</a>
           <a href="#diferenciais" class="hover:text-white transition-colors">Diferenciais</a>
           <a href="#sobre" class="hover:text-white transition-colors">Sobre</a>
           <a href="#depoimentos" class="hover:text-white transition-colors">Depoimentos</a>
@@ -83,6 +84,7 @@
     <div id="mobile-menu" class="md:hidden hidden bg-navy-900 border-t border-white/10">
       <nav class="max-w-6xl mx-auto px-5 py-4 flex flex-col gap-1 text-slate-200">
         <a href="#seguros" class="py-2.5 border-b border-white/5">Seguros</a>
+        <a href="#simulador" class="py-2.5 border-b border-white/5">Simular</a>
         <a href="#diferenciais" class="py-2.5 border-b border-white/5">Diferenciais</a>
         <a href="#sobre" class="py-2.5 border-b border-white/5">Sobre</a>
         <a href="#depoimentos" class="py-2.5 border-b border-white/5">Depoimentos</a>
@@ -96,6 +98,12 @@
   <section id="topo" class="hero-gradient relative overflow-hidden pt-28 md:pt-36 pb-20 md:pb-28">
     <div class="absolute -top-24 -right-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
     <div class="max-w-6xl mx-auto px-5 relative">
+      <!-- Faixa de campanha (controlada pelo painel do CRM) -->
+      <a id="campaign-bar" href="#" class="hidden group mb-8 md:mb-10 rounded-2xl bg-sky-500/15 border border-sky-400/30 px-5 py-3 items-center justify-center gap-3 text-center hover:bg-sky-500/25 transition-colors">
+        <span class="shrink-0 text-xs font-bold uppercase tracking-wider bg-sky-500 text-white px-2 py-0.5 rounded-full">Campanha</span>
+        <span id="campaign-text" class="text-sm md:text-base font-semibold text-white"></span>
+        <span class="shrink-0 text-sky-300 group-hover:translate-x-0.5 transition-transform">→</span>
+      </a>
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div>
           <span class="inline-flex items-center gap-2 glass text-sky-300 text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
@@ -294,6 +302,49 @@
     </div>
   </section>
 
+  <!-- ===== Simulador de Seguros ===== -->
+  <section id="simulador" class="py-20 md:py-28 bg-white text-navy">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center max-w-2xl mx-auto fade-up">
+        <span class="inline-block text-sky-600 font-semibold text-sm uppercase tracking-wider">Simulador</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-2">Descubra em segundos quanto custa o seu seguro</h2>
+        <p class="text-slate-500 mt-4">Faça uma estimativa rápida e gratuita, sem compromisso. Depois nossa equipe te envia a cotação exata.</p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-8 items-start">
+        <form id="sim-form" class="fade-up bg-slate-50 border border-slate-200 rounded-3xl p-6 md:p-8 space-y-5">
+          <div>
+            <label class="text-sm font-semibold text-navy">Tipo de seguro</label>
+            <select id="sim-tipo" class="mt-1 w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-navy outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition">
+              <option value="AUTO">Seguro Auto</option>
+              <option value="MOTO">Seguro Moto</option>
+              <option value="VIDA">Seguro de Vida</option>
+              <option value="RESIDENCIAL">Seguro Residencial</option>
+              <option value="EMPRESARIAL">Seguro Empresarial</option>
+            </select>
+          </div>
+          <div id="sim-valor-field">
+            <label id="sim-valor-label" class="text-sm font-semibold text-navy">Valor do veículo (R$)</label>
+            <input id="sim-valor" type="number" min="0" step="500" inputmode="numeric" placeholder="Ex.: 60000" class="mt-1 w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-navy outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition" />
+          </div>
+          <div id="sim-idade-field">
+            <label class="text-sm font-semibold text-navy">Sua idade</label>
+            <input id="sim-idade" type="number" min="18" max="90" inputmode="numeric" placeholder="Ex.: 35" class="mt-1 w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-navy outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 transition" />
+          </div>
+          <button type="submit" class="w-full bg-navy hover:bg-navy-700 text-white font-semibold py-3.5 rounded-xl transition-colors">Calcular estimativa</button>
+          <p class="text-[11px] text-slate-400 text-center">Valor aproximado, apenas para orientação. A cotação final depende da análise da seguradora.</p>
+        </form>
+
+        <div id="sim-result" class="fade-up hidden bg-navy text-white rounded-3xl p-6 md:p-8"></div>
+        <div id="sim-placeholder" class="fade-up rounded-3xl border-2 border-dashed border-slate-200 p-8 text-center flex flex-col items-center justify-center min-h-[280px]">
+          <div class="text-4xl mb-3">🧮</div>
+          <p class="font-semibold text-slate-500">Sua estimativa aparece aqui</p>
+          <p class="text-sm mt-1 text-slate-400">Preencha os dados e clique em calcular.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Cotação / Contato ===== -->
   <section id="cotacao" class="py-20 md:py-28 hero-gradient relative overflow-hidden">
     <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
@@ -440,6 +491,39 @@
       if (el) el.href = waBase + msgPadrao;
     });
 
+    // ===== Configuração da página (campanha/marca) =====
+    // Padrão local. Quando o painel do CRM estiver publicado, ele sobrescreve isto.
+    const LP_CONFIG_DEFAULT = {
+      campaign: {
+        enabled: true,
+        text: 'Faça uma simulação rápida e receba uma condição especial 🚗',
+        link: '#simulador',
+      },
+    };
+
+    function applyConfig(cfg) {
+      const bar = document.getElementById('campaign-bar');
+      const txt = document.getElementById('campaign-text');
+      if (!bar || !txt) return;
+      const c = (cfg && cfg.campaign) || {};
+      if (c.enabled && c.text) {
+        txt.textContent = c.text;
+        bar.href = c.link || '#cotacao';
+        bar.classList.remove('hidden');
+        bar.classList.add('flex');
+      } else {
+        bar.classList.add('hidden');
+        bar.classList.remove('flex');
+      }
+    }
+
+    // Aplica o padrão na hora e tenta buscar a versão do painel (se já existir).
+    applyConfig(LP_CONFIG_DEFAULT);
+    fetch(CRM_URL + '/api/public/landing')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => { if (data) applyConfig(data); })
+      .catch(() => {});
+
     // Formulário -> cria lead no CRM Synapse e abre o WhatsApp com feedback em tempo real
     document.getElementById('cotacao-form').addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -521,6 +605,152 @@
         }
       }, leadCreated ? 1200 : 2500);
     });
+
+    // ===== Simulador de seguros (estimativa + captura de lead) =====
+    (function () {
+      const form = document.getElementById('sim-form');
+      if (!form) return;
+      const tipoEl = document.getElementById('sim-tipo');
+      const valorEl = document.getElementById('sim-valor');
+      const idadeEl = document.getElementById('sim-idade');
+      const valorLabel = document.getElementById('sim-valor-label');
+      const idadeField = document.getElementById('sim-idade-field');
+      const result = document.getElementById('sim-result');
+      const placeholder = document.getElementById('sim-placeholder');
+
+      const CFG = {
+        AUTO:        { label: 'Seguro Auto',        valorLabel: 'Valor do veículo (R$)',  idade: true,  rate: 0.05,   floor: 800, spread: 0.12, period: 'ano' },
+        MOTO:        { label: 'Seguro Moto',        valorLabel: 'Valor da moto (R$)',     idade: true,  rate: 0.07,   floor: 500, spread: 0.12, period: 'ano' },
+        VIDA:        { label: 'Seguro de Vida',     valorLabel: 'Capital segurado (R$)',  idade: true,  vida: true,               spread: 0.15, period: 'mês' },
+        RESIDENCIAL: { label: 'Seguro Residencial', valorLabel: 'Valor do imóvel (R$)',   idade: false, rate: 0.0025, floor: 300, spread: 0.15, period: 'ano' },
+        EMPRESARIAL: { label: 'Seguro Empresarial', valorLabel: 'Faturamento anual (R$)', idade: false, rate: 0.005,  floor: 800, spread: 0.20, period: 'ano' },
+      };
+
+      const brl = (n) => n.toLocaleString('pt-br', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+
+      function ageFactor(age) {
+        if (!age || age < 25) return 1.8;
+        if (age <= 30) return 1.3;
+        if (age <= 60) return 1.0;
+        return 1.15;
+      }
+      function vidaFactor(age) {
+        if (!age || age < 30) return 0.25;
+        if (age <= 40) return 0.4;
+        if (age <= 50) return 0.7;
+        if (age <= 60) return 1.2;
+        return 2.0;
+      }
+
+      function applyType() {
+        const cfg = CFG[tipoEl.value];
+        valorLabel.textContent = cfg.valorLabel;
+        idadeField.classList.toggle('hidden', !cfg.idade);
+      }
+
+      function estimate() {
+        const cfg = CFG[tipoEl.value];
+        const valor = parseFloat(valorEl.value) || 0;
+        const idade = parseInt(idadeEl.value, 10) || 0;
+        let base;
+        if (cfg.vida) {
+          base = (valor / 1000) * vidaFactor(idade); // mensal
+        } else {
+          base = valor * cfg.rate * (cfg.idade ? ageFactor(idade) : 1);
+          if (base < cfg.floor) base = cfg.floor;
+        }
+        const min = Math.round(base * (1 - cfg.spread));
+        const max = Math.round(base * (1 + cfg.spread));
+        return { min, max, cfg, valor, idade };
+      }
+
+      function showResult(r) {
+        placeholder.classList.add('hidden');
+        result.classList.remove('hidden');
+        result.classList.add('in');
+        result.innerHTML =
+          '<p class="text-sky-300 text-sm font-semibold uppercase tracking-wider">Estimativa · ' + r.cfg.label + '</p>' +
+          '<p class="text-3xl md:text-4xl font-extrabold mt-3 leading-tight">' + brl(r.min) + ' <span class="text-slate-400 text-xl font-semibold">a</span> ' + brl(r.max) + '</p>' +
+          '<p class="text-slate-300 mt-1">por ' + r.cfg.period + '</p>' +
+          '<div class="mt-6 pt-6 border-t border-white/10">' +
+          '  <p class="font-semibold text-white">Quer a cotação exata?</p>' +
+          '  <p class="text-slate-300 text-sm mt-1">Deixe seu contato — enviamos o valor real e as melhores condições.</p>' +
+          '  <input id="sim-nome" type="text" placeholder="Seu nome" class="mt-4 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 outline-none focus:border-sky-500" />' +
+          '  <input id="sim-fone" type="tel" placeholder="Seu WhatsApp" class="mt-3 w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 outline-none focus:border-sky-500" />' +
+          '  <div id="sim-feedback" class="hidden"></div>' +
+          '  <button id="sim-cta" type="button" class="mt-3 w-full bg-sky-500 hover:bg-sky-600 text-white font-semibold py-3.5 rounded-xl transition-colors">Receber cotação exata</button>' +
+          '</div>';
+        document.getElementById('sim-cta').addEventListener('click', () => sendLead(r));
+      }
+
+      async function sendLead(r) {
+        const nome = document.getElementById('sim-nome').value.trim();
+        const fone = document.getElementById('sim-fone').value.trim();
+        const fb = document.getElementById('sim-feedback');
+        const cta = document.getElementById('sim-cta');
+        if (!nome || !fone) {
+          fb.className = 'bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs rounded-xl p-3 text-center mt-3';
+          fb.textContent = 'Preencha seu nome e WhatsApp.';
+          return;
+        }
+        cta.disabled = true;
+        const originalTxt = cta.innerHTML;
+        cta.innerHTML = '⏳ Registrando...';
+
+        const resumo = 'Simulação ' + r.cfg.label + ' · ' + r.cfg.valorLabel.replace(' (R$)', '') + ': ' + brl(r.valor) +
+          (r.cfg.idade ? (' · Idade: ' + (r.idade || '-')) : '') +
+          ' · Estimativa: ' + brl(r.min) + ' a ' + brl(r.max) + '/' + r.cfg.period;
+
+        let ok = false;
+        try {
+          const res = await fetch(CRM_URL + '/api/public/leads', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: nome,
+              phone: fone,
+              interest: tipoEl.value,
+              interestLabel: r.cfg.label + ' (Simulador)',
+              message: resumo,
+            }),
+          });
+          ok = res.ok;
+        } catch (err) { ok = false; }
+
+        if (ok) {
+          fb.className = 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs rounded-xl p-3 text-center mt-3';
+          fb.innerHTML = '✅ Recebemos seu contato! Abrindo o WhatsApp...';
+        } else {
+          fb.className = 'bg-amber-500/20 border border-amber-500/40 text-amber-200 text-xs rounded-xl p-3 text-center mt-3';
+          fb.innerHTML = '⚠️ Não foi possível registrar agora. Redirecionando para o WhatsApp...';
+        }
+
+        const msg = 'Olá! Fiz uma simulação no site. 🙂%0A%0A' +
+          '*Nome:* ' + encodeURIComponent(nome) + '%0A' +
+          '*WhatsApp:* ' + encodeURIComponent(fone) + '%0A' +
+          '*' + encodeURIComponent(resumo) + '*';
+        setTimeout(() => {
+          window.open(waBase + msg, '_blank');
+          cta.disabled = false;
+          cta.innerHTML = originalTxt;
+        }, ok ? 1200 : 2200);
+      }
+
+      tipoEl.addEventListener('change', applyType);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const valor = parseFloat(valorEl.value) || 0;
+        if (valor <= 0) {
+          valorEl.focus();
+          valorEl.classList.add('border-red-400');
+          setTimeout(() => valorEl.classList.remove('border-red-400'), 1500);
+          return;
+        }
+        showResult(estimate());
+      });
+
+      applyType();
+    })();
 
     // Header com fundo ao rolar
     const header = document.getElementById('site-header');
