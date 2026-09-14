@@ -387,6 +387,28 @@
     </div>
   </footer>
 
+  <!-- ===== Synapse SDR — assistente/chat no site (sem WhatsApp) ===== -->
+  <div id="sdr-root" class="fixed bottom-5 left-5 z-50 flex flex-col items-start gap-3">
+    <div id="sdr-panel" class="hidden w-[350px] max-w-[calc(100vw-2.5rem)] h-[520px] max-h-[75vh] rounded-2xl bg-navy-900 border border-white/10 shadow-2xl flex-col overflow-hidden">
+      <div class="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-sky-600 to-indigo-600 text-white">
+        <div class="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center text-lg">🤖</div>
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold text-sm leading-tight">Assistente Synapse</p>
+          <p class="text-[11px] text-sky-100 leading-tight">Responde na hora · qualifica seu atendimento</p>
+        </div>
+        <button id="sdr-close" type="button" aria-label="Fechar" class="text-white/80 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+      <div id="sdr-messages" class="flex-1 overflow-y-auto px-3 py-4 space-y-3 text-sm"></div>
+      <form id="sdr-form" class="flex items-center gap-2 p-3 border-t border-white/10">
+        <input id="sdr-input" type="text" autocomplete="off" placeholder="Digite sua mensagem..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-sky-500" />
+        <button type="submit" aria-label="Enviar" class="w-10 h-10 rounded-xl bg-sky-500 hover:bg-sky-600 text-white flex items-center justify-center shrink-0 text-lg">&#10148;</button>
+      </form>
+    </div>
+    <button id="sdr-launcher" type="button" aria-label="Abrir assistente Synapse" class="group flex items-center gap-2 h-14 pl-4 pr-5 rounded-full bg-sky-500 hover:bg-sky-600 shadow-lg text-white font-semibold transition-transform hover:scale-105">
+      <span class="text-2xl">💬</span><span class="text-sm">Fale com o assistente</span>
+    </button>
+  </div>
+
   <!-- ===== WhatsApp flutuante ===== -->
   <a id="wa-float" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" class="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 shadow-lg flex items-center justify-center transition-transform hover:scale-105">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.3-1.38a9.86 9.86 0 0 0 4.74 1.2h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.09c-.25.7-1.44 1.33-1.99 1.36-.53.06-1.03.28-3.48-.72-2.94-1.16-4.83-4.14-4.98-4.33-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.3.59-.37.79-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.25.6.84 2.06.91 2.21.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12.99 2.06 1.3 2.36 1.45.3.15.47.12.64-.07.17-.2.73-.85.92-1.14.2-.3.4-.25.67-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.07.12.07.72-.18 1.42z"/></svg>
@@ -519,6 +541,101 @@
       entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach((el) => io.observe(el));
+
+    // ===== Synapse SDR — chat de qualificação no site (usa /api/sdr/web, sem WhatsApp) =====
+    (function () {
+      const panel = document.getElementById('sdr-panel');
+      const launcher = document.getElementById('sdr-launcher');
+      const closeBtn = document.getElementById('sdr-close');
+      const messages = document.getElementById('sdr-messages');
+      const form = document.getElementById('sdr-form');
+      const input = document.getElementById('sdr-input');
+      const SDR_ENDPOINT = CRM_URL + '/api/sdr/web';
+      let sessionId = '';
+      let started = false;
+      let sending = false;
+
+      function bubble(role, text) {
+        const wrap = document.createElement('div');
+        wrap.className = role === 'user' ? 'flex justify-end' : 'flex justify-start';
+        const b = document.createElement('div');
+        b.className = role === 'user'
+          ? 'max-w-[80%] rounded-2xl rounded-br-sm bg-sky-500 text-white px-3 py-2 whitespace-pre-line'
+          : 'max-w-[80%] rounded-2xl rounded-bl-sm bg-white/10 text-slate-100 px-3 py-2 whitespace-pre-line';
+        b.textContent = text;
+        wrap.appendChild(b);
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function typing() {
+        const wrap = document.createElement('div');
+        wrap.className = 'flex justify-start';
+        wrap.id = 'sdr-typing';
+        wrap.innerHTML = '<div class="rounded-2xl rounded-bl-sm bg-white/10 text-slate-300 px-3 py-2 text-xs">digitando…</div>';
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+      }
+      function clearTyping() {
+        const t = document.getElementById('sdr-typing');
+        if (t) t.remove();
+      }
+
+      function openPanel() {
+        panel.classList.remove('hidden');
+        panel.classList.add('flex');
+        input.focus();
+        if (!started) {
+          started = true;
+          bubble('bot', 'Olá! 👋 Sou o assistente virtual da Synapse. Posso te fazer algumas perguntas rápidas para direcionar seu atendimento?\n\nMe mande um "oi" para começarmos. 🙂');
+        }
+      }
+      function closePanel() {
+        panel.classList.add('hidden');
+        panel.classList.remove('flex');
+      }
+
+      launcher.addEventListener('click', () => {
+        if (panel.classList.contains('hidden')) openPanel(); else closePanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text || sending) return;
+        sending = true;
+        input.value = '';
+        bubble('user', text);
+        typing();
+        try {
+          const res = await fetch(SDR_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId, message: text }),
+          });
+          const data = await res.json().catch(() => ({}));
+          clearTyping();
+          if (res.ok && data.reply) {
+            if (data.sessionId) sessionId = data.sessionId;
+            bubble('bot', data.reply);
+            if (data.done) {
+              const tag = data.classification ? ' (lead ' + String(data.classification).toLowerCase() + ')' : '';
+              bubble('bot', '✅ Prontinho! Seus dados foram registrados no CRM' + tag + '. Nossa equipe já vai te chamar. 🙌');
+              input.disabled = true;
+              form.querySelector('button[type="submit"]').disabled = true;
+            }
+          } else {
+            bubble('bot', '⚠️ Ops, tive um problema para responder agora. Tente novamente em instantes.');
+          }
+        } catch (err) {
+          clearTyping();
+          bubble('bot', '⚠️ Não consegui me conectar agora. Verifique sua conexão e tente de novo.');
+        } finally {
+          sending = false;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
